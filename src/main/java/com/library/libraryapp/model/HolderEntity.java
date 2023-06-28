@@ -1,39 +1,23 @@
 package com.library.libraryapp.model;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
+@Data
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class HolderEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "holderEntity")
-    private List<Document> documentsHeld;
+    private List<Document> documentsHeld = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "possessorEntity")
-    private List<Document> documentsPossessed;
-
-    // Default constructor
-    public HolderEntity() {
-        this.documentsHeld = new ArrayList<>();
-        this.documentsPossessed = new ArrayList<>();
-    }
-    public HolderEntity(ArrayList<Document> documentsHeld, ArrayList<Document> documentsPossessed) {
-        this.documentsHeld = documentsHeld;
-        this.documentsPossessed = documentsPossessed;
-    }
-
-    // Getter methods for private fields
-    public List<Document> getDocumentsHeld() {
-        return this.documentsHeld;
-    }
-
-    public List<Document> getDocumentsPossessed() {
-        return this.documentsPossessed;
-    }
-
-    // Add setter methods if necessary
+    private List<Document> documentsPossessed = new ArrayList<>();
 }
 
 /*

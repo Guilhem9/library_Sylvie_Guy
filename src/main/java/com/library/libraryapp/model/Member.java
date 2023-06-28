@@ -1,9 +1,34 @@
 package com.library.libraryapp.model;
 
-import java.time.YearMonth;
-import java.util.HashMap;
-public class Member extends HolderEntity {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
+
+@Data
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Member extends HolderEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String memberID;
+
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String postalCode;
+    private String city;
+    private LocalDate registrationDate;
+    private int membershipPoints = 100;
+
+    @OneToMany(mappedBy = "member")
+    private List<Document> currentBorrows;
 }
 /*
 public class Member extends HolderEntity {
