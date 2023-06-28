@@ -1,12 +1,12 @@
 package com.library.libraryapp.model;
 import javax.persistence.*;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class HolderEntity {
+
+    private Long id;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "holderEntity")
     private List<Document> documentsHeld;
@@ -19,12 +19,17 @@ public abstract class HolderEntity {
         this.documentsHeld = new ArrayList<>();
         this.documentsPossessed = new ArrayList<>();
     }
-    public HolderEntity(ArrayList<Document> documentsHeld, ArrayList<Document> documentsPossessed) {
+    public HolderEntity(List<Document> documentsHeld, List<Document> documentsPossessed) {
         this.documentsHeld = documentsHeld;
         this.documentsPossessed = documentsPossessed;
     }
 
     // Getter methods for private fields
+
+    public Long getId() {
+        return this.id;
+    }
+
     public List<Document> getDocumentsHeld() {
         return this.documentsHeld;
     }

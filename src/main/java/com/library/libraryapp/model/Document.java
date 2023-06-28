@@ -6,11 +6,12 @@ import java.time.Year;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="doc_type")
 public abstract class Document {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String documentID;
+    private long documentID;
 
     private String title;
     private String author;
@@ -23,10 +24,10 @@ public abstract class Document {
     @ManyToOne
     private HolderEntity holder = null;
 
-    @ManyToOne
+    @OneToOne
     private Borrow currentBorrow = null;
 
-    @ManyToOne
+    @OneToOne
     private Member currentBorrower = null;
 
     // Constructor with title and author
@@ -64,7 +65,7 @@ public abstract class Document {
     public HolderEntity getHolder() {
         return holder;
     }
-    public String getDocumentID() {
+    public long getDocumentID() {
         return documentID;
     }
     public Borrow getCurrentBorrow() {

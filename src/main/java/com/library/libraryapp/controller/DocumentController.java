@@ -20,7 +20,7 @@ public class DocumentController {
     }
 
     @GetMapping("/{id}")
-    public Document getDocumentById(@PathVariable String id) {
+    public Document getDocumentById(@PathVariable Long id) {
         return documentService.getDocumentById(id);
     }
 
@@ -35,7 +35,7 @@ public class DocumentController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteDocument(@PathVariable String id) {
+    public void deleteDocument(@PathVariable Long id) {
         documentService.deleteDocument(id);
     }
 }

@@ -1,9 +1,85 @@
 package com.library.libraryapp.model;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.HashMap;
-public class Member extends HolderEntity {
+import java.util.List;
 
+public class Member extends HolderEntity {
+    private String lastName;
+    private String firstName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long memberID;
+    private YearMonth registrationDate;
+    private List<Borrow> currentBorrows = new ArrayList<>();
+    private int membershipPoints = 100;
+
+    // Constructor with last name, first name, documents held, and documents possessed
+    public Member(String lastName, String firstName, List<Document> documentsHeld, List<Document> documentPossessed) {
+        super(documentsHeld, documentPossessed);
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.registrationDate = YearMonth.now();
+    }
+
+    // Constructor with last name and first name
+    public Member(String lastName, String firstName) {
+        super();
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.registrationDate = YearMonth.now();
+    }
+
+    // Getter methods for class Member
+    public Long getMemberID() {
+        return memberID;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public YearMonth getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public List<Borrow> getCurrentBorrows() {
+        return this.currentBorrows;
+    }
+
+    public int getMembershipPoints(){
+        return membershipPoints;
+    }
+
+    // Setter Methods for class Member
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setRegistrationDate(YearMonth registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public void setMembershipPoints(int daysLate) {
+        if (membershipPoints-daysLate >= 0) {
+            this.membershipPoints -= daysLate;
+        }
+        else {
+            System.out.println("Membership points equals to 0 or less. Member " + memberID + " shall be removed");
+        }
+    }
 }
 /*
 public class Member extends HolderEntity {
