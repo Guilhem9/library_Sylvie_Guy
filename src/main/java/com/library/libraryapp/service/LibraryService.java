@@ -88,5 +88,9 @@ public class LibraryService {
         libraryRepository.save(library);
         documentRepository.save(document);
     }
+
+    public void saveLibrary(Library library) {
+        libraryRepository.save(library);
+    }
 }
 
