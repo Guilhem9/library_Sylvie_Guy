@@ -17,7 +17,7 @@ public class BorrowService {
         this.borrowRepository = borrowRepository;
     }
 
-    public List<Borrow> findBorrowsByMember(Member member) {
-        return borrowRepository.findByMember(member);
+    public List<Borrow> findBorrowsByMember(Long memberId) {
+        return borrowRepository.findByMemberId(memberId);
     }
 }

@@ -3,13 +3,12 @@ package com.library.libraryapp.model;
 import javax.persistence.*;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @Entity
 public class Library extends HolderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long libraryID;
+    private long libraryId;
     private String name;
     @OneToMany(mappedBy = "library")
     private List<Member> membersRegistered;
@@ -47,8 +46,8 @@ public class Library extends HolderEntity {
         return this.name;
     }
 
-    public long getLibraryID() {
-        return this.libraryID;
+    public long getLibraryId() {
+        return this.libraryId;
     }
 
     public List<Member> getMembersRegistered() {

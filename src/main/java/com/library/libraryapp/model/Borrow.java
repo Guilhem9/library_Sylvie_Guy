@@ -18,11 +18,10 @@ public class Borrow {
     private LocalDate borrowDate;
     private LocalDate expectedReturnDate;
     private LocalDate actualReturnDate;
-    private static int nextBorrowID = 0;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "borrow_id")
-    private Long borrowID;
+    @Column(name = "borrow_id")// Voir pour rajouter cette fonctionnalité partout
+    private Long borrowId;
 
 
     public Borrow(Member member, Document document, Library library) {
@@ -38,8 +37,8 @@ public class Borrow {
         this.expectedReturnDate = expectedReturnDate;
     }
 
-    public long getBorrowID() {
-        return borrowID;
+    public long getBorrowId() {
+        return borrowId;
     }
 
     public LocalDate getExpectedReturnDate() {

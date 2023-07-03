@@ -2,8 +2,6 @@ package com.library.libraryapp.model;
 import java.time.Year;
 import javax.persistence.*;
 
-import java.time.Year;
-
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="doc_type")
@@ -11,7 +9,7 @@ public abstract class Document {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long documentID;
+    private Long documentId;
 
     private String title;
     private String author;
@@ -65,14 +63,23 @@ public abstract class Document {
     public HolderEntity getHolder() {
         return holder;
     }
-    public long getDocumentID() {
-        return documentID;
+    public long getDocumentId() {
+        return documentId;
     }
     public Borrow getCurrentBorrow() {
         return currentBorrow;
     }
     public Member getCurrentBorrower() {
         return currentBorrower;
+    }
+
+    public Boolean isBorrowed(){
+        if (currentBorrower != null){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     // Setter methods
@@ -97,6 +104,8 @@ public abstract class Document {
     public boolean isHeldBy(HolderEntity entity) {
         return this.holder == entity;
     }
+
+
     // Abstract method to get the type of the document (to be implemented by subclasses)
     public abstract String getType();
     public void setCurrentBorrow(Borrow currentBorrow) {
@@ -104,6 +113,12 @@ public abstract class Document {
     }
     public void setCurrentBorrower(Member currentBorrower) {
         this.currentBorrower = currentBorrower;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     @Override

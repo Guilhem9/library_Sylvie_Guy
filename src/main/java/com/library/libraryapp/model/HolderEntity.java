@@ -6,8 +6,6 @@ import java.util.ArrayList;
 @MappedSuperclass
 public abstract class HolderEntity {
 
-    private Long id;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "holderEntity")
     private List<Document> documentsHeld;
 

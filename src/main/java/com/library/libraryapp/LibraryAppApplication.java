@@ -15,7 +15,6 @@ import com.library.libraryapp.model.Librarian;
 import com.library.libraryapp.model.Member;
 import org.springframework.context.ApplicationContext;
 
-import java.time.LocalDate;
 import java.time.Year;
 
 @SpringBootApplication
@@ -68,22 +67,22 @@ public class LibraryAppApplication {
 
 
 		// Adding of the members into the library files and see the list of members
-		libraryService.addMember(MyLibrary.getLibraryID(), Guilhem); // Adding the member to the library
+		libraryService.addMember(MyLibrary.getLibraryId(), Guilhem); // Adding the member to the library
 		System.out.println((MyLibrary.getMembersRegistered()));
 
 
 		// Adding of the documents in the library by the librarian
-		libraryService.addDocument(Book1.getDocumentID(), MyLibrary.getLibraryID()); // Adding a document to the library
-		libraryService.addDocument(Book2.getDocumentID(), MyLibrary.getLibraryID());
-		libraryService.addDocument(Comics1.getDocumentID(), MyLibrary.getLibraryID());
-		libraryService.addDocument(Archive1.getDocumentID(), MyLibrary.getLibraryID());
-		libraryService.addDocument(Dictionary1.getDocumentID(), MyLibrary.getLibraryID());
+		libraryService.addDocument(Book1.getDocumentId(), MyLibrary.getLibraryId()); // Adding a document to the library
+		libraryService.addDocument(Book2.getDocumentId(), MyLibrary.getLibraryId());
+		libraryService.addDocument(Comics1.getDocumentId(), MyLibrary.getLibraryId());
+		libraryService.addDocument(Archive1.getDocumentId(), MyLibrary.getLibraryId());
+		libraryService.addDocument(Dictionary1.getDocumentId(), MyLibrary.getLibraryId());
 
 
 		// Borrowing of books by members, and see the resulting document list of the library
 		System.out.println("List of documents Held by the library : " + MyLibrary.getDocumentsHeld());
 		try {
-			memberService.borrowDocument(Guilhem.getId(), Book1.getDocumentID(), MyLibrary); // Member borrowing a document from the library
+			memberService.borrowDocument(Guilhem.getId(), Book1.getDocumentId(), MyLibrary); // Member borrowing a document from the library
 		} catch (Exception e) {
 			e.printStackTrace();
 		} // Member borrowing a document from the library
@@ -96,7 +95,7 @@ public class LibraryAppApplication {
 		System.out.println(Guilhem.getDocumentsHeld());
 		System.out.println(Guilhem.getCurrentBorrows());
 		try {
-			memberService.returnDocument(Guilhem.getId(), Book1.getDocumentID(), MyLibrary);
+			memberService.returnDocument(Guilhem.getId(), Book1.getDocumentId(), MyLibrary);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -105,13 +104,13 @@ public class LibraryAppApplication {
 
 		// delete a member of the file system
 		System.out.println();
-		libraryService.removeMember(Guilhem.getId(), MyLibrary.getLibraryID());
+		libraryService.removeMember(Guilhem.getId(), MyLibrary.getLibraryId());
 		MyLibrary.getMembersRegistered().toString();
 
 
 		// try to borrow again a book
 		try {
-			memberService.borrowDocument(Guilhem.getId(), Comics1.getDocumentID(), MyLibrary); // Member borrowing a document from the library
+			memberService.borrowDocument(Guilhem.getId(), Comics1.getDocumentId(), MyLibrary); // Member borrowing a document from the library
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -1,20 +1,20 @@
 package com.library.libraryapp.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Entity
 public class Member extends HolderEntity {
     private String lastName;
     private String firstName;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberID;
+    private Long memberId;
     private YearMonth registrationDate;
+    @OneToMany(mappedBy = "library")
     private List<Borrow> currentBorrows = new ArrayList<>();
     private int membershipPoints = 100;
 
@@ -36,7 +36,7 @@ public class Member extends HolderEntity {
 
     // Getter methods for class Member
     public Long getMemberID() {
-        return memberID;
+        return memberId;
     }
 
     public String getFirstName() {
@@ -77,7 +77,7 @@ public class Member extends HolderEntity {
             this.membershipPoints -= daysLate;
         }
         else {
-            System.out.println("Membership points equals to 0 or less. Member " + memberID + " shall be removed");
+            System.out.println("Membership points equals to 0 or less. Member " + memberId + " shall be removed");
         }
     }
 }
