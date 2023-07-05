@@ -62,7 +62,7 @@ public class LibraryAppApplication {
 		// Creation of members and librarians
 		Librarian Cesar = new Librarian("Pigeart de Gurbert", "César"); // Creating a new librarian
 		MyLibrary.addLibrarian(Cesar);
-		libraryService.addMember(MyLibrary.getId(), Cesar); // Adding the librarian as a member of the library
+		libraryService.addMember(MyLibrary.getLibraryId(), Cesar); // Adding the librarian as a member of the library
 		Member Guilhem = new Member("de Montbrun", "Guilhem"); // Creating a new member
 
 
@@ -82,7 +82,7 @@ public class LibraryAppApplication {
 		// Borrowing of books by members, and see the resulting document list of the library
 		System.out.println("List of documents Held by the library : " + MyLibrary.getDocumentsHeld());
 		try {
-			memberService.borrowDocument(Guilhem.getId(), Book1.getDocumentId(), MyLibrary); // Member borrowing a document from the library
+			memberService.borrowDocument(Guilhem.getMemberID(), Book1.getDocumentId(), MyLibrary); // Member borrowing a document from the library
 		} catch (Exception e) {
 			e.printStackTrace();
 		} // Member borrowing a document from the library
@@ -95,7 +95,7 @@ public class LibraryAppApplication {
 		System.out.println(Guilhem.getDocumentsHeld());
 		System.out.println(Guilhem.getCurrentBorrows());
 		try {
-			memberService.returnDocument(Guilhem.getId(), Book1.getDocumentId(), MyLibrary);
+			memberService.returnDocument(Guilhem.getMemberID(), Book1.getDocumentId(), MyLibrary);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -104,13 +104,13 @@ public class LibraryAppApplication {
 
 		// delete a member of the file system
 		System.out.println();
-		libraryService.removeMember(Guilhem.getId(), MyLibrary.getLibraryId());
+		libraryService.removeMember(Guilhem.getMemberID(), MyLibrary.getLibraryId());
 		MyLibrary.getMembersRegistered().toString();
 
 
 		// try to borrow again a book
 		try {
-			memberService.borrowDocument(Guilhem.getId(), Comics1.getDocumentId(), MyLibrary); // Member borrowing a document from the library
+			memberService.borrowDocument(Guilhem.getMemberID(), Comics1.getDocumentId(), MyLibrary); // Member borrowing a document from the library
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

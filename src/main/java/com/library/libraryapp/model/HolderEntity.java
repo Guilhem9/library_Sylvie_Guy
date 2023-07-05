@@ -24,10 +24,6 @@ public abstract class HolderEntity {
 
     // Getter methods for private fields
 
-    public Long getId() {
-        return this.id;
-    }
-
     public List<Document> getDocumentsHeld() {
         return this.documentsHeld;
     }
