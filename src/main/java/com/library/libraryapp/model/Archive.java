@@ -4,7 +4,7 @@ import javax.persistence.DiscriminatorValue;
 import java.time.Year;
 
 // Class representing an Archive, extends Document
-@DiscriminatorValue("ARCHIVE")
+@DiscriminatorValue("Archive")
 public class Archive extends Document {
     // Constructors calling the corresponding Document constructors
     public Archive(String title, String author) {

@@ -1,7 +1,9 @@
 package com.library.libraryapp.model;
 
+import javax.persistence.DiscriminatorValue;
 import java.time.Year;
 
+@DiscriminatorValue("Comics")
 // Class representing a comics, extends Document
 public class Comics extends Document {
     // Constructors calling the corresponding Document constructors

@@ -4,8 +4,12 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-
+@Entity
 public class Borrow {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "borrow_id")
+    private Long borrowID;
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
@@ -18,11 +22,7 @@ public class Borrow {
     private LocalDate borrowDate;
     private LocalDate expectedReturnDate;
     private LocalDate actualReturnDate;
-    private static int nextBorrowID = 0;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "borrow_id")
-    private Long borrowID;
+
 
 
     public Borrow(Member member, Document document, Library library) {

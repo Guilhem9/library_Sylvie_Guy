@@ -11,7 +11,8 @@ public abstract class Document {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long documentID;
+    @Column(name = "document_id")
+    private Long documentID;
 
     private String title;
     private String author;
@@ -65,7 +66,7 @@ public abstract class Document {
     public HolderEntity getHolder() {
         return holder;
     }
-    public long getDocumentID() {
+    public Long getDocumentID() {
         return documentID;
     }
     public Borrow getCurrentBorrow() {
@@ -76,6 +77,12 @@ public abstract class Document {
     }
 
     // Setter methods
+    public void setTitle(String title){
+        this.title = title;
+    }
+    public void setAuthor(String author){
+        this.author = author;
+    }
     public void setReleaseDate(int releaseDate) {
         if (Year.of(releaseDate).isAfter(Year.now())) {
             System.out.println("Setting of the Release Year impossible: Year after current one");

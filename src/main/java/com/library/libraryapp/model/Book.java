@@ -4,7 +4,7 @@ import javax.persistence.DiscriminatorValue;
 import java.time.Year;
 
 // Class representing a book, extends Document
-@DiscriminatorValue("BOOK")
+@DiscriminatorValue("Book")
 public class Book extends Document {
     // Document constructors
     public Book(String title, String author) {

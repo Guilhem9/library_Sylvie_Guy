@@ -1,7 +1,6 @@
 package com.library.libraryapp.model;
 
 import javax.persistence.*;
-import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -10,6 +9,7 @@ public
 class Librarian extends Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "librarian_id")
     private long librarianID;
 
     // Constructor with last name and first name

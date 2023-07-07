@@ -10,6 +10,8 @@ import com.library.libraryapp.repository.LibraryRepository;
 import com.library.libraryapp.repository.MemberRepository;
 import com.library.libraryapp.repository.DocumentRepository;
 
+import java.util.List;
+
 
 @Service
 public class LibraryService {
@@ -25,7 +27,22 @@ public class LibraryService {
         this.documentRepository = documentRepository;
     }
 
-    public Library addMember(Long libraryId, Member member) {
+    public List<Member> getAllMembers(Long libraryId) {
+        Library library = libraryRepository.findById(libraryId)
+                .orElseThrow(() -> new RuntimeException("Library not found with id: " + libraryId));
+        return library.getMembersRegistered();
+    }
+
+    public Member getMemberById(Long memberId, Long libraryId) {
+        Library library = libraryRepository.findById(libraryId)
+                .orElseThrow(() -> new RuntimeException("Library not found with id: " + libraryId));
+        return library.getMembersRegistered().stream()
+                .filter(member -> member.getMemberID().equals(memberId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Member not found with id: " + memberId));
+    }
+
+    public Library addMember(Member member, Long libraryId) {
         Library library = libraryRepository.findById(libraryId).orElseThrow(/* throw an exception */);
         member = memberRepository.save(member);  // save member to database and get the persisted entity
         library.getMembersRegistered().add(member);
@@ -33,9 +50,25 @@ public class LibraryService {
         return library;
     }
 
+    public Member updateMember(Long memberId, Long libraryId, Member updatedMember) {
+        Library library = libraryRepository.findById(libraryId)
+                .orElseThrow(() -> new RuntimeException("Library not found with id: " + libraryId));
+
+        Member existingMember = library.getMembersRegistered().stream()
+                .filter(member -> member.getMemberID().equals(memberId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Member not found with id: " + memberId));
+
+        existingMember.setLastName(updatedMember.getLastName());
+        existingMember.setFirstName(updatedMember.getFirstName());
+
+        memberRepository.save(existingMember);
+        return existingMember;
+    }
+
     public void removeMember(Long memberId, Long libraryId) {
-        Library library = libraryRepository.findById(libraryId).orElseThrow( /* throw an exception */ );
-        Member member = memberRepository.findById(memberId).orElseThrow( /* throw an exception */ );
+        Library library = libraryRepository.findById(libraryId).orElseThrow(() -> new RuntimeException("Library not found with id: " + libraryId));
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("Member not found with id: " + memberId));
 
         if (borrowRepository.findByMember(member).isEmpty()) {
             library.getMembersRegistered().remove(member);
@@ -46,8 +79,23 @@ public class LibraryService {
         }
     }
 
+    public List<Document> getAllDocuments(Long libraryId) {
+        Library library = libraryRepository.findById(libraryId)
+                .orElseThrow(() -> new RuntimeException("Library not found with id: " + libraryId));
+        return library.getDocumentsHeld();
+    }
+
+    public Document getDocumentById(Long documentId, Long libraryId) {
+        Library library = libraryRepository.findById(libraryId)
+                .orElseThrow(() -> new RuntimeException("Library not found with id: " + libraryId));
+        return library.getDocumentsHeld().stream()
+                .filter(document -> document.getDocumentID().equals(documentId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Document not found with id: " + documentId));
+    }
+
     // Method to add a document to a library
-    public void addDocument(long documentID, Long libraryId) {
+    public Document addDocument(Long documentID, Long libraryId) {
         Document document = documentRepository.findById(documentID)
                 .orElseThrow(() -> new RuntimeException("Document not found with id: " + documentID));
         Library library = libraryRepository.findById(libraryId)
@@ -60,12 +108,47 @@ public class LibraryService {
             document.setPossessor(library);
             document.setHolder(library);
         } else {
-            System.out.println("This document is already held by someone else");
+            throw new IllegalStateException("This document is already held by someone else");
         }
         libraryRepository.save(library);
         documentRepository.save(document);
+        return document;
     }
 
-    //removeDocument
+    public Document updateDocument(Long documentId, Long libraryId, Document updatedDocument) {
+        Library library = libraryRepository.findById(libraryId)
+                .orElseThrow(() -> new RuntimeException("Library not found with id: " + libraryId));
+
+        Document existingDocument = library.getDocumentsHeld().stream()
+                .filter(document -> document.getDocumentID().equals(documentId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Document not found with id: " + documentId));
+
+        existingDocument.setTitle(updatedDocument.getTitle());
+        existingDocument.setAuthor(updatedDocument.getAuthor());
+
+        documentRepository.save(existingDocument);
+        return existingDocument;
+    }
+
+    // Method to remove a document to a library
+    public void removeDocument(Long documentID, Long libraryId) {
+        Document document = documentRepository.findById(documentID)
+                .orElseThrow(() -> new RuntimeException("Document not found with id: " + documentID));
+        Library library = libraryRepository.findById(libraryId)
+                .orElseThrow(() -> new RuntimeException("Library not found with id: " + libraryId));
+
+        if (library.getDocumentsHeld().contains(document)) {
+            library.getDocumentsHeld().remove(document);
+            library.getDocumentsPossessed().remove(document);
+            document.setPossessor(null);
+            document.setHolder(null);
+            document.setIsBorrowed(false);
+            documentRepository.save(document);
+            libraryRepository.save(library);
+        } else {
+            throw new IllegalStateException("This document is not held by the library");
+        }
+    }
 }
 

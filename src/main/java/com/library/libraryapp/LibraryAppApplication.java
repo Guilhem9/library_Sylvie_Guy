@@ -13,11 +13,13 @@ import com.library.libraryapp.model.Dictionary;
 import com.library.libraryapp.model.Library;
 import com.library.libraryapp.model.Librarian;
 import com.library.libraryapp.model.Member;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ApplicationContext;
 
 import java.time.LocalDate;
 import java.time.Year;
 
+@EntityScan(basePackages = "com.library.libraryapp.*")
 @SpringBootApplication
 public class LibraryAppApplication {
 	public static void main(String[] args) {
@@ -63,12 +65,12 @@ public class LibraryAppApplication {
 		// Creation of members and librarians
 		Librarian Cesar = new Librarian("Pigeart de Gurbert", "César"); // Creating a new librarian
 		MyLibrary.addLibrarian(Cesar);
-		libraryService.addMember(MyLibrary.getId(), Cesar); // Adding the librarian as a member of the library
+		libraryService.addMember(Cesar, MyLibrary.getId()); // Adding the librarian as a member of the library
 		Member Guilhem = new Member("de Montbrun", "Guilhem"); // Creating a new member
 
 
 		// Adding of the members into the library files and see the list of members
-		libraryService.addMember(MyLibrary.getLibraryID(), Guilhem); // Adding the member to the library
+		libraryService.addMember(Guilhem, MyLibrary.getLibraryID()); // Adding the member to the library
 		System.out.println((MyLibrary.getMembersRegistered()));
 
 

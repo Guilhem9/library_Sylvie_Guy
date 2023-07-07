@@ -1,9 +1,11 @@
 package com.library.libraryapp.model;
 
 
+import javax.persistence.DiscriminatorValue;
 import java.time.Year;
 
 // Class representing a dictionary, extends Document
+@DiscriminatorValue("Dictionary")
 public class Dictionary extends Document {
     // Constructors calling the corresponding Document constructors
     public Dictionary(String title, String author) {

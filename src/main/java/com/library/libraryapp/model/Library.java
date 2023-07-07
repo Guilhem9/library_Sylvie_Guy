@@ -3,12 +3,12 @@ package com.library.libraryapp.model;
 import javax.persistence.*;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @Entity
 public class Library extends HolderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "library_id")
     private long libraryID;
     private String name;
     @OneToMany(mappedBy = "library")
@@ -79,9 +79,9 @@ public class Library extends HolderEntity {
 
     // Method to print the documents in the library
     public void printDocuments() {
-        System.out.println("Documents dans la bibliothèque " + name);
+        System.out.println("Documents in the library " + name);
         for (Document document : this.getDocumentsHeld()) {
-            System.out.println("- Type: " + document.getType() + " , Titre: " + document.getTitle() + " , Auteur: " + document.getAuthor());
+            System.out.println("- Type: " + document.getType() + " , title: " + document.getTitle() + " , Author: " + document.getAuthor());
         }
     }
 

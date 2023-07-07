@@ -1,19 +1,19 @@
 package com.library.libraryapp.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.YearMonth;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
+@Entity
 public class Member extends HolderEntity {
-    private String lastName;
-    private String firstName;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     private Long memberID;
+
+    private String lastName;
+    private String firstName;
     private YearMonth registrationDate;
     private List<Borrow> currentBorrows = new ArrayList<>();
     private int membershipPoints = 100;
